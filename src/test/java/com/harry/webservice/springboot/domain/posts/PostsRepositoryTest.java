@@ -1,22 +1,23 @@
 package com.harry.webservice.springboot.domain.posts;
 
-import org.assertj.core.api.Assertions;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@Rollback
 @SpringBootTest
 class PostsRepositoryTest {
 
     @Autowired
     public PostsRepository postsRepository;
 
-    @After
+    @AfterEach
     void cleanUp() {
         postsRepository.deleteAll();
     }

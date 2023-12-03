@@ -4,8 +4,7 @@ import com.harry.webservice.springboot.domain.posts.Posts;
 import com.harry.webservice.springboot.domain.posts.PostsRepository;
 import com.harry.webservice.springboot.web.dto.PostsSaveRequestDto;
 import com.harry.webservice.springboot.web.dto.PostsUpdateRequestDto;
-import org.assertj.core.api.Assertions;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PostsApiControllerTest {
@@ -33,7 +32,7 @@ class PostsApiControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
-    @After
+    @AfterEach
     void tearDown() throws Exception {
         postsRepository.deleteAll();
     }
@@ -67,7 +66,7 @@ class PostsApiControllerTest {
     @Test
     void Posts_수정_된다() throws Exception {
         // given
-        Posts savePosts = postsRepository.save(Posts.builder()
+        final Posts savePosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
                 .author("author")
@@ -78,7 +77,7 @@ class PostsApiControllerTest {
         final String expectedTitle = "title2";
         final String expectedContent = "content2";
 
-        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+        final PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
                 .build();
@@ -95,8 +94,8 @@ class PostsApiControllerTest {
 
         List<Posts> postsList = postsRepository.findAll();
 
-        assertThat(postsList.get(0).getTitle()).isEqualTo(expectedTitle);
-        assertThat(postsList.get(0).getContent()).isEqualTo(expectedContent);
+        assertThat(postsList.get(1).getTitle()).isEqualTo(expectedTitle);
+        assertThat(postsList.get(1).getContent()).isEqualTo(expectedContent);
     }
 
     @Test
